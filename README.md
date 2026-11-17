@@ -15,11 +15,19 @@
   - 综合分 = 0.55×准确度 + 0.25×完整度 + 0.20×流利度（语速锚点 125 wpm）
   - 回放自己的录音，和示范音频对比
 - **学习进度**：每句历史最佳、文档级进度条、连续打卡、近 14 天练习量、最近练习记录
+- **AI 批阅（作文批改）**：先设定批阅话题 → 上传学生作文（TXT / MD / PDF / DOCX）→ 获得总分、任务完成度/连贯性/语法/词汇四维评分、逐条错误修正、优点与改进建议、总体评语（可复制）
+  - 配置 OpenAI 兼容 API Key（DeepSeek / 智谱免费 / 通义千问 / Kimi / OpenAI）即用 AI 深度批阅；Key 只存浏览器，直连厂商
+  - 不配置则自动降级为**免费基础批阅**（LanguageTool 语法检查 + 统计特征，零配置）
 - **本地优先**：文档、成绩、历史全部保存在浏览器 localStorage，不上传任何服务器，天然规避隐私与合规风险
 
 > ⚠️ 免费打分是**文本级 + 流利度级**评估，不是音素级（phoneme-level）发音评测，且依赖浏览器语音识别的质量。
 > 升级到专业级评分（SpeechSuper / Azure Pronunciation Assessment，音素级、支持重音 / 连读 / 韵律）只需替换 `src/lib/scoring.ts`，
 > 详见 `docs/feasibility-study.md`《可行性调研报告》。
+
+## 线上地址
+
+- 已发布到 GitHub Pages：<https://xiaxiang626-droid.github.io/English-Speaker/>
+- 当前分支每次 push 都会自动构建并部署（GitHub Actions）
 
 ## 快速开始
 
@@ -52,18 +60,21 @@ npm run smoke      # jsdom 冒烟测试（构建后运行，验证首屏渲染�
 ```
 ├── index.html               # 入口（中文 meta、内联 SVG favicon）
 ├── src/
-│   ├── App.tsx              # 应用外壳：侧边栏 + 跟读 / 进度 / 说明三个标签页
+│   ├── App.tsx              # 应用外壳：侧边栏 + 跟读 / AI 批阅 / 进度 / 说明四个标签页
 │   ├── components/
 │   │   ├── PracticePanel.tsx  # 核心跟读面板：播放 / 录音 / 打分 / 逐词诊断
+│   │   ├── GradingView.tsx    # AI 批阅：话题管理 / 作文上传 / 批阅结果 / 记录
 │   │   ├── StatsView.tsx      # 学习进度（打卡、柱状图、历史表）
-│   │   ├── GuideView.tsx      # 使用说明（打分原理、国内部署、升级路径、FAQ）
+│   │   ├── GuideView.tsx      # 使用说明（打分原理、AI 批阅、国内部署、FAQ）
 │   │   ├── ScoreRing.tsx      # 综合分圆环（SVG 动画）
+│   │   ├── ScoreBar.tsx       # 维度分条（跟读面板与 AI 批阅复用）
 │   │   └── icons.tsx          # 内联 SVG 图标
 │   ├── lib/
 │   │   ├── parser.ts        # PDF/DOCX/TXT 解析 + 英文分句（小数/缩写保护）
 │   │   ├── tts.ts           # Web Speech API 封装（音色加载、朗读）
 │   │   ├── scoring.ts       # 免费打分：语音识别文本归一化 + 编辑距离对齐 + 三维分数
-│   │   └── storage.ts       # localStorage 持久化（文档 / 每句最佳 / 历史 / 设置）
+│   │   ├── grading.ts       # AI 批阅：统计 / 话题关键词 / LanguageTool / OpenAI 兼容 LLM 调用 / 免费基础批阅
+│   │   └── storage.ts       # localStorage 持久化（文档 / 每句最佳 / 历史 / 设置 / 话题 / 批阅记录）
 │   ├── data/samples.ts      # 原创示例短文（The Lost Umbrella 等）
 │   └── styles.css           # 设计系统（纸张质感 + 深绿主题）
 ├── scripts/smoke.mjs        # jsdom 冒烟测试
@@ -74,7 +85,8 @@ npm run smoke      # jsdom 冒烟测试（构建后运行，验证首屏渲染�
 ## 路线图
 
 - [x] MVP：文档上传 → TTS 朗读 → 跟读录音 → 免费打分 → 进度/打卡
-- [ ] 接入 SpeechSuper / Azure Pronunciation Assessment（音素级评分，需 API key）
+- [x] AI 批阅：话题设定 → 作文上传 → AI/免费基础批阅（逐条错误修正 + 四维评分）
+- [ ] 接入 SpeechSuper / Azure Pronunciation Assessment（音素级跟读评分，需 API key）
 - [ ] 逐词 karaoke 高亮（Azure TTS word boundary 或 WhisperX 强制对齐）
 - [ ] 错音专项训练（/θ,ð/、/l,r/ 对照练习）
 - [ ] 后端账号体系 + 跨设备同步（可选，目前刻意保持纯前端）

@@ -3,6 +3,7 @@ import type { BestEntry, ScoreSettings, StoredDoc } from '../lib/types';
 import { scoreReading, type ScoreResult } from '../lib/scoring';
 import { speak, stopSpeaking } from '../lib/tts';
 import ScoreRing from './ScoreRing';
+import ScoreBar from './ScoreBar';
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -50,23 +51,6 @@ export interface PracticePanelProps {
   onSettingsChange: (settings: ScoreSettings) => void;
   /** 用户在面板内主动操作时，用于打断「全文听读」 */
   onInterruptFullRead?: () => void;
-}
-
-function ScoreBar({ label, value }: { label: string; value: number | null }) {
-  const display = value === null ? 0 : value;
-  const color =
-    value === null ? '#c9c6b8' : value >= 85 ? '#16a34a' : value >= 70 ? '#d97706' : '#dc2626';
-  return (
-    <div className="score-bar">
-      <div className="score-bar-head">
-        <span>{label}</span>
-        <span className="score-bar-value">{value === null ? '未评估' : `${value}`}</span>
-      </div>
-      <div className="score-bar-track">
-        <div className="score-bar-fill" style={{ width: `${display}%`, background: color }} />
-      </div>
-    </div>
-  );
 }
 
 export default function PracticePanel({

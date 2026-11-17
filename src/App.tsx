@@ -21,6 +21,7 @@ import type { ScoreResult } from './lib/scoring';
 import PracticePanel from './components/PracticePanel';
 import StatsView from './components/StatsView';
 import GuideView from './components/GuideView';
+import GradingView from './components/GradingView';
 import {
   IconBook,
   IconChart,
@@ -28,6 +29,7 @@ import {
   IconInfo,
   IconListen,
   IconMic,
+  IconPen,
   IconPlay,
   IconTrash,
   IconUpload,
@@ -36,7 +38,7 @@ import {
 } from './components/icons';
 import { SAMPLE_DOCS } from './data/samples';
 
-type Tab = 'practice' | 'stats' | 'guide';
+type Tab = 'practice' | 'grading' | 'stats' | 'guide';
 
 const uuid = () =>
   typeof crypto !== 'undefined' && 'randomUUID' in crypto
@@ -245,6 +247,9 @@ export default function App() {
           <button className={`nav-tab${tab === 'practice' ? ' active' : ''}`} onClick={() => setTab('practice')}>
             <IconMic size={16} /> 跟读练习
           </button>
+          <button className={`nav-tab${tab === 'grading' ? ' active' : ''}`} onClick={() => setTab('grading')}>
+            <IconPen size={16} /> AI 批阅
+          </button>
           <button className={`nav-tab${tab === 'stats' ? ' active' : ''}`} onClick={() => setTab('stats')}>
             <IconChart size={16} /> 学习进度
           </button>
@@ -400,6 +405,7 @@ export default function App() {
           </div>
         )}
 
+        {tab === 'grading' && <GradingView />}
         {tab === 'stats' && <StatsView history={history} />}
         {tab === 'guide' && <GuideView />}
       </main>

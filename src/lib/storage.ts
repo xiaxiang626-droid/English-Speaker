@@ -1,10 +1,14 @@
-import type { BestEntry, PracticeRecord, ScoreSettings, StoredDoc } from './types';
+import type { BestEntry, GradingAISettings, GradingResult, GradingTopic, PracticeRecord, ScoreSettings, StoredDoc } from './types';
+import { DEFAULT_GRADING_AI_SETTINGS } from './grading';
 
 const KEYS = {
   docs: 'english-speaker.docs.v1',
   best: 'english-speaker.best.v1',
   history: 'english-speaker.history.v1',
   settings: 'english-speaker.settings.v1',
+  topics: 'english-speaker.topics.v1',
+  grades: 'english-speaker.grades.v1',
+  gradingAI: 'english-speaker.grading-ai.v1',
 } as const;
 
 const bestKey = (docId: string, index: number) => `${docId}:${index}`;
@@ -107,4 +111,52 @@ export function loadSettings(): ScoreSettings {
 
 export function saveSettings(settings: ScoreSettings): void {
   writeJson(KEYS.settings, settings);
+}
+
+// ---------- AI 批阅：话题库 ----------
+export function loadTopics(): GradingTopic[] {
+  const topics = readJson<GradingTopic[]>(KEYS.topics, []);
+  return [...topics].sort((a, b) => b.createdAt - a.createdAt);
+}
+
+export function saveTopic(topic: GradingTopic): GradingTopic[] {
+  const topics = readJson<GradingTopic[]>(KEYS.topics, []);
+  const next = [topic, ...topics];
+  writeJson(KEYS.topics, next);
+  return next;
+}
+
+export function deleteTopic(topicId: string): GradingTopic[] {
+  const topics = readJson<GradingTopic[]>(KEYS.topics, []);
+  const next = topics.filter((t) => t.id !== topicId);
+  writeJson(KEYS.topics, next);
+  return next;
+}
+
+// ---------- AI 批阅：批阅记录 ----------
+export function loadGrades(): GradingResult[] {
+  return readJson<GradingResult[]>(KEYS.grades, []);
+}
+
+export function appendGrade(result: GradingResult): GradingResult[] {
+  const grades = readJson<GradingResult[]>(KEYS.grades, []);
+  const next = [result, ...grades].slice(0, 100);
+  writeJson(KEYS.grades, next);
+  return next;
+}
+
+export function deleteGrade(id: string): GradingResult[] {
+  const grades = readJson<GradingResult[]>(KEYS.grades, []);
+  const next = grades.filter((g) => g.id !== id);
+  writeJson(KEYS.grades, next);
+  return next;
+}
+
+// ---------- AI 批阅：AI 设置 ----------
+export function loadGradingAISettings(): GradingAISettings {
+  return { ...DEFAULT_GRADING_AI_SETTINGS, ...readJson<Partial<GradingAISettings>>(KEYS.gradingAI, {}) };
+}
+
+export function saveGradingAISettings(settings: GradingAISettings): void {
+  writeJson(KEYS.gradingAI, settings);
 }

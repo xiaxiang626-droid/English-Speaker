@@ -108,6 +108,24 @@ export function IconInfo({ size = 17, className }: IconProps) {
   );
 }
 
+export function IconPen({ size = 17, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path d="M4 20h4.5L19.6 8.9a2.12 2.12 0 0 0-3-3L5.5 17L4 20Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="M14.5 7.5 16.5 9.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconCopy({ size = 16, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M5 15V6a2 2 0 0 1 2-2h9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function IconCheck({ size = 16, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">

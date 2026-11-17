@@ -73,4 +73,13 @@ assert(clickButton((t) => t.includes('使用说明')), '切换到使用说明标
 await sleep(200);
 assert(text().includes('免费打分是怎么工作的'), '使用说明页渲染正常');
 
+assert(clickButton((t) => t.includes('AI 批阅')), '切换到 AI 批阅标签');
+await sleep(200);
+assert(text().includes('话题'), 'AI 批阅页话题区渲染正常');
+assert(clickButton((t) => t === '载入示例' || t.includes('载入示例')), '找到载入示例按钮');
+await sleep(400);
+assert(text().includes('unforgettable'), '载入示例后显示示例话题');
+assert(text().includes('sample-essay.txt'), '载入示例作文后显示示例文件');
+assert(text().includes('开始批阅'), '批阅按钮渲染正常');
+
 console.log(process.exitCode ? '\nSMOKE FAILED' : '\nSMOKE PASSED');

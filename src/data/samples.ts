@@ -35,3 +35,16 @@ export const SAMPLE_DOCS: Array<Pick<StoredDoc, 'title' | 'sentences'> & { hint:
     ],
   },
 ];
+
+/** AI 批阅示例：话题 + 一篇带典型错误的作文 */
+export const SAMPLE_GRADING_TOPIC = {
+  title: 'Describe an unforgettable trip you took.',
+  requirements: '不少于 100 词；涵盖时间、地点、同行人、个人感受；注意时态一致与冠词使用。',
+};
+
+export const SAMPLE_ESSAY =
+  'Last summer, I go to Hangzhou with my parents. We see the West Lake and take a lot of photo there. ' +
+  'The weather is very hot, and i dont like to bringing a umbrella. We visit many places, and the view was really beautiful. ' +
+  'I forget to bring my shoes, so my mother buy me a new pair in a shop. Everyone in my family like the trip very much, ' +
+  'because it is truly unforgettable and i will never forget it. I think it is the best trip in my life. ' +
+  'If i will have time, i want go again next year with my best friend Tom.';

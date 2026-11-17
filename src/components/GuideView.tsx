@@ -58,7 +58,23 @@ export default function GuideView() {
 
       <div className="panel-card">
         <div className="panel-card-head">
-          <h3>四、常见问题</h3>
+          <h3>四、AI 批阅（作文批改）怎么用？</h3>
+        </div>
+        <div className="guide-body">
+          <p><strong>流程</strong>：① 左侧先新建/选择话题和批阅要求（可保存多条，组成话题库）→ ② 上传学生作文文件（TXT / MD / PDF / DOCX）→ ③ 点「开始批阅」，结果含总分、维度评分、逐条错误修正、优点、改进建议和总体评语，可一键复制报告。</p>
+          <p><strong>两种模式</strong>：</p>
+          <ul>
+            <li><strong>AI 深度批阅（推荐）</strong>：在「AI 批阅设置」里填入 OpenAI 兼容接口的 API Key。支持 DeepSeek（约 ¥1/百万 token）、智谱 GLM-4-Flash（免费）、通义千问 DashScope（免费额度）、Kimi、OpenAI 或自定义接口。输出任务完成度 / 连贯性 / 语法 / 词汇四维 + 逐条「原文 → 修正 → 中文说明」。Key 只存浏览器 localStorage，直连厂商接口，不经过任何第三方服务器。</li>
+            <li><strong>免费基础批阅（零配置）</strong>：LanguageTool 免费语法/拼写检查（可关闭、可改自建地址）+ 统计特征（词数、句长、词汇多样性、话题关键词覆盖率），给出基础分和错误清单。局限：不考察内容深度与连贯性，评分偏粗。</li>
+          </ul>
+          <p><strong>数据与隐私</strong>：话题与批阅记录只存浏览器 localStorage；作文文本仅在（a）配置了 AI Key 时发给你选择的厂商、或（b）开启 LanguageTool 时发给该语法检查服务，否则全程留在本机。</p>
+          <p><strong>国内部署建议</strong>：选智谱 GLM-4-Flash（免费）或 DeepSeek，并关闭 / 自建 LanguageTool——全程走国内可直连的接口。</p>
+        </div>
+      </div>
+
+      <div className="panel-card">
+        <div className="panel-card-head">
+          <h3>五、常见问题</h3>
         </div>
         <div className="guide-body">
           <dl className="faq">
