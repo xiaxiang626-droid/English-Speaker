@@ -33,6 +33,10 @@ npm run smoke      # jsdom 冒烟测试（构建后运行，验证首屏渲染�
 ```
 
 > 麦克风需要 HTTPS 或 localhost 访问才会被浏览器放行。本地开发用 `http://localhost:5173` 即可。
+>
+> **注意（云端沙箱 / Arena 环境）**：应用跑在沙箱里，你自己电脑的 `localhost` 上没有这个服务，直接输入 `localhost:5173` 会得到 ERR_CONNECTION_REFUSED。
+> 请改用平台生成的 Live Preview 地址（形如 `https://<端口>-<沙箱ID>.e2b.app`，Arena 界面里会有对应按钮），
+> 或把仓库克隆到自己电脑上再 `npm install && npm run dev`，那时 `http://localhost:5173` 才有效。
 
 ## 国内使用 / 上线部署
 
